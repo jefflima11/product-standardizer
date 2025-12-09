@@ -1,11 +1,11 @@
-import { testsConnection as testsConnectionModel} from '../models/connectionTestModel.js';
+import { connectionTest as connectionTestModel} from '../models/connectionTestModel.js';
 
 
-export async function testsConnection(req, res) {
+export async function connectionTest(req, res, next) {
   try {
-    const result = await testsConnectionModel();
-    res.status(200).json({ message: 'Connection test successful', data: result });
-  } catch (error) {
-    res.status(500).json({ message: 'Connection test failed', error: error.message });
-  }
+    const result = await connectionTestModel();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  };
 };

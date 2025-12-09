@@ -1,8 +1,8 @@
-import Router from 'express';
-import { testsConnection } from '../controllers/testsController.js';
+import { Router } from 'express';
+import { connectionTest } from '../controllers/testsController.js';
 
 const router = Router();
 
-router.get('/connection', testsConnection);
+router.get('/connection', connectionTest);
 
 export default router;

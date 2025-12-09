@@ -1,11 +1,11 @@
 import app from './app.js';
-import { iniDB, closeDB } from './src/config/db.js';
+import { initDB, closeDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 3007;
 
 app.listen(PORT, async () => {
   console.log(`Servidor rodando!`);
-  await iniDB();
+  await initDB();
 });
 
 process.on("SIGINT", async () => {

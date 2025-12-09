@@ -5,7 +5,7 @@ dotenv.config();
 
 let pool;
 
-export async function iniDB() {
+export async function initDB() {
     try {
         oracledb.initOracleClient({ libDir: process.env.ORACLE_CLIENT_LIB_DIR });
 
@@ -26,13 +26,13 @@ export async function iniDB() {
 }
 
 export async function closeDB() {
-    try {
+    try{
         if (pool) {
             await pool.close(0);
-            console.log("Pool Oracle fechado");
+            console.log("Pool OracleDB fechado");
         }
     } catch (err) {
-        console.error('Error closing database connection pool:', err);
+        console.error("Erro ao fechar o Pool OracleDB", err);
     }
 }
 
