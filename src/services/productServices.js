@@ -1,9 +1,5 @@
 import { connectionTest as connectionTestModel } from '../models/connectionTestModel.js';
 
-export const standardize = (product) => {
-  return product;
-}
-
 export async function connectionTest(req, res) {
   try {
     const exec = await connectionTestModel()
