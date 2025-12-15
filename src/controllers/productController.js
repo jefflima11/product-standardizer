@@ -1,4 +1,4 @@
-import { getAllProducts as getAllProductsModel, dumpAllProducts as dumpAllProductsModel} from '../models/productModel.js';
+import { getAllProducts as getAllProductsModel, dumpAllProducts as dumpAllProductsModel, updateProducts as updateProductsModel} from '../models/productModel.js';
 
 export async function getAllProducts(req, res) {
     try {
@@ -13,6 +13,16 @@ export async function dumpAllProducts(req, res) {
     try {
         const dumpedProducts = await dumpAllProductsModel();
         res.status(200).json({return: dumpedProducts, message: 'Dump realizado com sucesso!'});
+    } catch (error) {
+        res.status(500).json({ errorMessage: error.message });
+    }
+}
+
+export async function updateProducts(req, res) {
+    try {
+        const products  = req.body;
+        const updatedProducts = await updateProductsModel(products);
+        res.status(200).json(updatedProducts);
     } catch (error) {
         res.status(500).json({ errorMessage: error.message });
     }

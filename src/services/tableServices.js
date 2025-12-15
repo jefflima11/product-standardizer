@@ -18,7 +18,7 @@ export async function verifica_tabelas() {
                 await con.execute(`
                     CREATE SEQUENCE  
                         DBAHUMS.seq_padroniza_produtos  MINVALUE 1 MAXVALUE 9999999999999999999999999999 
-                    INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE
+                    INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE
                     `,[], { autoCommit: true });
     
                 console.log("Sequencia 'seq_padroniza_produtos' criada com sucesso.");

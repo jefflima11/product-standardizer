@@ -62,5 +62,22 @@ export const bodyQueryProducts = `
         where
                 p.sn_mestre = 'N'
                 and p.sn_movimentacao = 'S'
-        Order By 3,4
+`;
+
+export const updateProducts = `
+    UPDATE 
+        DBAHUMS.PADRONIZA_PRODUTOS_HUMS
+    SET 
+        SN_BLOQUEIO_DE_COMPRA = :bloqueio,
+        SN_PADRONIZADO = :padronizado,
+        SN_CONTROLADO = :controlado,
+        DT_ALTERACAO = SYSDATE,
+        DS_OBSERVACAO = :observacao,
+        CD_USUARIO = USER
+    WHERE 
+        CD_PRODUTO = :produto
+`;
+
+export const orderByProducts = `
+    ORDER BY 3,4
 `;
