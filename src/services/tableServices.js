@@ -10,18 +10,18 @@ export async function verifica_tabelas() {
             From
                 All_Sequences
             Where
-                sequence_name = 'SEQ_PADRONIZA_PRODUTOS'
+                sequence_name = 'SEQ_PAD_PRO'
         `);
 
         if (!seq || seq.rows.length === 0) {
             try {
                 await con.execute(`
                     CREATE SEQUENCE  
-                        DBAHUMS.seq_padroniza_produtos  MINVALUE 1 MAXVALUE 9999999999999999999999999999 
+                        DBAHUMS.SEQ_PAD_PRO  MINVALUE 1 MAXVALUE 9999999999999999999999999999 
                     INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE
                     `,[], { autoCommit: true });
     
-                console.log("Sequencia 'seq_padroniza_produtos' criada com sucesso.");
+                console.log("Sequencia de padronização de produtos criada com sucesso.");
             } catch(createError) {
                 console.error("Erro ao criar sequencia':", createError);
             }
@@ -41,32 +41,32 @@ export async function verifica_tabelas() {
             select 
                 1
             from
-                dbahums.padroniza_produtos_hums
+                dbahums.pad_pro_hums
         `);
 
         if(!result) {
-            console.log("Tabela 'PADRONIZA_PRODUTOS_HUMS' criada com sucesso.");
+            console.log("Tabela de padronização criada com sucesso.");
         }
 
     } catch(error) {
         if(error.code === 'ORA-00942') { 
-            // tabela não existe
             try {
                 await con.execute(`
-                    CREATE TABLE DBAHUMS.PADRONIZA_PRODUTOS_HUMS (
-                        CD_PADRONIZA_PRODUTOS INT PRIMARY KEY,
+                    CREATE TABLE DBAHUMS.PAD_PRO_HUMS (
+                        CD_PAD_PRO INT PRIMARY KEY,
                         CD_PRODUTO INT NOT NULL,
-                        SN_BLOQUEIO_DE_COMPRA VARCHAR2(1) NOT NULL,
+                        SN_BLO_COM VARCHAR2(1) NOT NULL,
                         SN_PADRONIZADO VARCHAR2(1) NOT NULL,
                         SN_CONTROLADO VARCHAR2(1) NOT NULL,
                         DT_ALTERACAO DATE NOT NULL,
+                        DT_ULTIMA_MOVIMENTACAO DATE NOT NULL,
                         DS_OBSERVACAO VARCHAR2(500),
                         CD_USUARIO VARCHAR(55) NOT NULL
                     )
                     `,[], { autoCommit: true });
-                    console.log("Tabela 'PADRONIZA_PRODUTOS' criada com sucesso.");
+                    console.log("Tabela de padronização criada com sucesso.");
             } catch(createError) {
-                console.error("Erro ao criar tabela 'PADRONIZA_PRODUTOS_HUMS':", createError);
+                console.error("Erro ao criar tabela de padronização:", createError);
             }  
         }
     } 

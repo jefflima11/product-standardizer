@@ -15,12 +15,13 @@ export const getAllProducts = `
 
 export const dumpAllProducts = `
         select  
-                dbahums.seq_padroniza_produtos.nextval,
-                p.cd_produto as codigo_produto,
-                p.sn_bloqueio_de_compra as bloqueio_de_compra,
-                p.sn_padronizado as padronizado,
-                p.sn_pscotropico as psicotropico,
-                sysdate as data_alteracao,
+                dbahums.seq_pad_pro.nextval,
+                p.cd_produto,
+                p.sn_bloqueio_de_compra,
+                p.sn_padronizado,
+                p.sn_pscotropico,
+                sysdate,
+                f.dt,
                 'DUMP AUTOMATICO' as ds_observacao,
                 user as cd_usuario
         
@@ -80,4 +81,37 @@ export const updateProducts = `
 
 export const orderByProducts = `
     ORDER BY 3,4
+`;
+
+export const allProductsDumped = `
+        SELECT 
+                P.CD_PRODUTO CODIGO_PRODUTO,
+                P.DS_PRODUTO DESCRICAO_PRODUTO,
+                DT_ULTIMA_MOVIMENTACAO DATA_ULTIMA_MOVIMENTACAO,
+                DS_OBSERVACAO DESCRICAO_OBSERVACAO,
+                Decode(PD.SN_PADRONIZADO, 'S', 'SIM', 'N', 'NAO', PD.SN_PADRONIZADO) PADRONIZADO,
+                Decode(PD.SN_CONTROLADO, 'S', 'SIM', 'N', 'NAO', PD.SN_CONTROLADO) PSICOTROPICO,
+                Decode(PD.SN_BLO_COM, 'S', 'SIM', 'N', 'NAO', PD.SN_BLO_COM) BLOQUEIO_DE_COMPRA,
+                E.DS_ESPECIE,
+                SC.DS_SUB_CLA
+                
+        FROM
+                DBAHUMS.PAD_PRO_HUMS PD
+                INNER JOIN DBAMV.PRODUTO P ON P.CD_PRODUTO = PD.CD_PRODUTO
+                Inner Join DBAMV.ESPECIE E On P.CD_ESPECIE = E.CD_ESPECIE
+                Inner Join DBAMV.SUB_CLAS SC On P.CD_SUB_CLA = SC.CD_SUB_CLA And P.CD_CLASSE = SC.CD_CLASSE And P.CD_ESPECIE = SC.CD_ESPECIE
+`;
+
+export const insertDumpQuery= `
+        INSERT INTO DBAHUMS.PAD_PRO_HUMS (
+                CD_PAD_PRO,
+                CD_PRODUTO,
+                SN_BLO_COM,
+                SN_PADRONIZADO,
+                SN_CONTROLADO,
+                DT_ALTERACAO,
+                DT_ULTIMA_MOVIMENTACAO,
+                DS_OBSERVACAO,
+                CD_USUARIO
+        )
 `;
